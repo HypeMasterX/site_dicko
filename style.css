@@ -1,0 +1,173 @@
+/* style.css */
+
+/* Arrière-plan commun à toutes les pages */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f2eb;
+    color: #2c2c2c;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navigation principale avec logo */
+nav {
+    background-color: #3c7a57;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    height: 60px;
+    width: auto;
+    margin-right: 20px;
+}
+
+/* Menu de navigation */
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 15px;
+}
+
+nav ul li {
+    display: inline;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+/* En-tête */
+header h1 {
+    color: #2e5a3f;
+    text-align: center;
+    margin: 20px 0;
+}
+
+/* Contenu principal */
+main {
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 0 15px;
+}
+
+/* ========================== */
+/* GALERIE DE PHOTOS (slider) */
+/* ========================== */
+.galerie-photos {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 20px;
+    padding: 10px 0;
+}
+
+.galerie-photos figure {
+    flex: 0 0 auto;
+    width: 250px;
+    text-align: center;
+}
+
+.galerie-photos img.galerie-image {
+    width: 250px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.galerie-photos img.galerie-image:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.caption, .galerie-photos figcaption {
+    text-align: center;
+    font-style: italic;
+    margin-top: 5px;
+    color: #5a5a5a;
+}
+
+/* ======================================== */
+/* IMAGES DANS LES 10 PAGES TOURISTIQUES */
+/* ======================================== */
+.section-touristique {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 0 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: justify;
+}
+
+.photo-site-touristique {
+    width: 100%;
+    max-width: 700px;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    margin-bottom: 25px;
+}
+
+/* Texte descriptif */
+.description-site {
+    font-size: 1.1em;
+    line-height: 1.6;
+    color: #2c2c2c;
+    text-align: justify;
+    max-width: 900px;
+}
+
+/* Pied de page */
+footer {
+    background-color: #3c7a57;
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    margin-top: 40px;
+    font-size: 0.9em;
+}
+
+/* Formulaire */
+form label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+form input, form select, form textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+form button {
+    margin-top: 15px;
+    background-color: #3c7a57;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+form button:hover {
+    background-color: #2e5a3f;
+}

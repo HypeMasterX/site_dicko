@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Formulaire de réservation</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #54df60;
+      padding: 20px;
+    }
+    h1, h2 {
+      color: #333;
+
+    }
+    form {
+      background-color: rgb(218, 239, 221);
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      max-width: 600px;
+      margin: auto;
+    }
+    label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 4px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .erreurs {
+      color: red;
+      background: #ffe0e0;
+      padding: 10px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+    }
+    .confirmation {
+      background: #e0ffe0;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Réservation d'hôtel à Bobo-Dioulasso</h1>
+
+  <form id="formReservation">
+    <label>Nom complet :
+      <input type="text" name="nom" required>
+    </label>
+
+    <label>Adresse e-mail :
+      <input type="email" name="email" required>
+    </label>
+
+    <label>Téléphone :
+      <input type="text" name="telephone" required>
+    </label>
+
+    <label>Numéro de la CNIB :
+      <input type="text" name="cnib" required pattern="\d{13}" placeholder="13 chiffres">
+    </label>
+
+    <label>Date d'arrivée :
+      <input type="date" name="date_arrivee" required>
+    </label>
+
+    <label>Date de départ :
+      <input type="date" name="date_depart" required>
+    </label>
+
+    <label>Hôtel :
+      <select name="hotel" required>
+        <option value="">Choisissez un hôtel</option>
+        <option value="hotel1">Hôtel Relaxe</option>
+        <option value="hotel2">Hôtel Dioulasso Palace</option>
+        <option value="hotel3">Hôtel Sya</option>
+        <option value="autre">Autre</option>
+      </select>
+    </label>
+
+    <label>Nombre de personnes :
+      <input type="number" name="nb_personnes" min="1" required>
+    </label>
+
+    <label>Préférences particulières :
+      <textarea name="preferences" rows="4"></textarea>
+    </label>
+
+    <button type="submit">Valider la réservation</button>
+  </form>
+
+  <div id="resultat" style="display:none;"></div>
+
+  <script>
+    document.getElementById("formReservation").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const data = new FormData(form);
+      const nom = data.get("nom").trim();
+      const email = data.get("email").trim();
+      const tel = data.get("telephone").trim();
+      const cnib = data.get("cnib").trim();
+      const dateArrivee = data.get("date_arrivee");
+      const dateDepart = data.get("date_depart");
+      const hotel = data.get("hotel");
+      const nb = parseInt(data.get("nb_personnes"));
+      const preferences = data.get("preferences").trim();
+
+      const erreurs = [];
+
+      if (!nom) erreurs.push("Le nom complet est obligatoire.");
+      if (!email || !email.includes("@")) erreurs.push("L'adresse e-mail est invalide ou manquante.");
+      if (!tel) erreurs.push("Le numéro de téléphone est obligatoire.");
+      if (!/^\d{13}$/.test(cnib)) erreurs.push("Le numéro de la CNIB doit contenir exactement 13 chiffres.");
+      if (!dateArrivee) erreurs.push("La date d'arrivée est obligatoire.");
+      if (!dateDepart) erreurs.push("La date de départ est obligatoire.");
+      if (dateArrivee > dateDepart) erreurs.push("La date d'arrivée doit être antérieure à la date de départ.");
+      if (nb < 1) erreurs.push("Le nombre de personnes doit être au moins égal à 1.");
+      if (!["hotel1", "hotel2", "hotel3", "autre"].includes(hotel)) erreurs.push("L'hôtel choisi n'est pas valide.");
+
+      const resultat = document.getElementById("resultat");
+      if (erreurs.length > 0) {
+        resultat.innerHTML = "<div class='erreurs'><h2>Erreur(s) dans le formulaire :</h2><ul>" +
+          erreurs.map(e => `<li>${e}</li>`).join("") +
+          "</ul><p><a href='#'>Corriger le formulaire</a></p></div>";
+        resultat.style.display = "block";
+        return;
+      }
+
+      const hotelNom = {
+        hotel1: "Hôtel Relaxe",
+        hotel2: "Hôtel Dioulasso Palace",
+        hotel3: "Hôtel Sya",
+        autre: "Autre hôtel"
+      }[hotel];
+
+      resultat.innerHTML = `
+        <div class='confirmation'>
+          <h2>Réservation confirmée</h2>
+          <p>Merci <strong>${nom}</strong> pour votre réservation à Bobo-Dioulasso.</p>
+          <ul>
+            <li>Email : ${email}</li>
+            <li>Téléphone : ${tel}</li>
+            <li>Numéro CNIB : ${cnib}</li>
+            <li>Date d'arrivée : ${dateArrivee}</li>
+            <li>Date de départ : ${dateDepart}</li>
+            <li>Hôtel choisi : ${hotelNom}</li>
+            <li>Nombre de personnes : ${nb}</li>
+            ${preferences ? `<li>Préférences particulières : ${preferences.replace(/\n/g, '<br>')}</li>` : ''}
+          </ul>
+          <p><a href="index.html">Retour à l'accueil</a></p>
+        </div>
+      `;
+      resultat.style.display = "block";
+      form.style.display = "none";
+    });
+  </script>
+
+</body>
+</html>
