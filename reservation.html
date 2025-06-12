@@ -12,7 +12,6 @@
     }
     h1, h2 {
       color: #333;
-
     }
     form {
       background-color: rgb(218, 239, 221);
@@ -32,6 +31,20 @@
       margin-top: 4px;
       border-radius: 4px;
       border: 1px solid #ccc;
+    }
+    .cnib-container {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .cnib-container span {
+      padding: 8px 12px;
+      background-color: #eee;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .cnib-container input {
+      flex: 1;
     }
     button {
       background-color: #007BFF;
@@ -75,7 +88,10 @@
     </label>
 
     <label>Numéro de la CNIB :
-      <input type="text" name="cnib" required pattern="\d{13}" placeholder="13 chiffres">
+      <div class="cnib-container">
+        <span>B</span>
+        <input type="text" name="cnib_chiffres" pattern="\d{8}" maxlength="8" placeholder="8 chiffres" required>
+      </div>
     </label>
 
     <label>Date d'arrivée :
@@ -117,7 +133,8 @@
       const nom = data.get("nom").trim();
       const email = data.get("email").trim();
       const tel = data.get("telephone").trim();
-      const cnib = data.get("cnib").trim();
+      const cnibChiffres = data.get("cnib_chiffres").trim();
+      const cnib = "B" + cnibChiffres;
       const dateArrivee = data.get("date_arrivee");
       const dateDepart = data.get("date_depart");
       const hotel = data.get("hotel");
@@ -129,7 +146,7 @@
       if (!nom) erreurs.push("Le nom complet est obligatoire.");
       if (!email || !email.includes("@")) erreurs.push("L'adresse e-mail est invalide ou manquante.");
       if (!tel) erreurs.push("Le numéro de téléphone est obligatoire.");
-      if (!/^\d{13}$/.test(cnib)) erreurs.push("Le numéro de la CNIB doit contenir exactement 13 chiffres.");
+      if (!/^\d{8}$/.test(cnibChiffres)) erreurs.push("Le numéro de la CNIB doit comporter exactement 8 chiffres après le B.");
       if (!dateArrivee) erreurs.push("La date d'arrivée est obligatoire.");
       if (!dateDepart) erreurs.push("La date de départ est obligatoire.");
       if (dateArrivee > dateDepart) erreurs.push("La date d'arrivée doit être antérieure à la date de départ.");
